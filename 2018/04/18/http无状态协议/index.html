@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+        <!--Setting-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta http-equiv="Cache-Control" content="no-siteapp">
+        <meta http-equiv="Cache-Control" content="no-transform">
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta name="apple-mobile-web-app-capable" content="Kingbora">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no,email=no,adress=no">
+        <meta name="browsermode" content="application">
+        <meta name="screen-orientation" content="portrait">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="stylesheet" href="/css/ionicons.min.css">
+        <link rel="stylesheet" href="/css/animate.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/markdown.css">
+        <link rel="stylesheet" href="/css/code.css">
+        <script src="/scripts/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <div id="ui-app">
+            <!-- 头部 -->
+            <header class="ui-header">
+    <ul class="ui-menu">
+        
+            <li class="">
+                <a href="/">首页</a>
+            </li>
+        
+            <li class="">
+                <a href="/archives/">归档</a>
+            </li>
+        
+            <li class="">
+                <a href="/about/">关于我</a>
+            </li>
+        
+    </ul>
+</header>
+            <!-- 主体内容 -->
+            <section class="ui-section">
+                <main class="ui-content-wrap animated slideInUp">
+    <article class="ui-card ui-article">
+        <div class="ui-card-body">
+            <div class="ui-article-header">
+                <h3 class="ui-article-title">
+                    http无状态协议
+                </h3>
+                <div class="ui-article-type">
+                    <span class="ui-tag ui-tag-original">原</span>
+                    
+                        <span class="ui-tag ui-tag-default">
+                            <a class="ui-tag-badge" href="/tags/web/" title="web">
+                                web
+                            </a>
+                        </span>
+                        
+                        <span class="ui-tag ui-tag-default">
+                            <a class="ui-tag-badge" href="/tags/http/" title="http">
+                                http
+                            </a>
+                        </span>
+                        
+                </div>
+            </div>
+            <div class="ui-article-body ui-mark-down">
+                <blockquote>
+<p>在此前的HTTP中，曾谈到过HTTP是一种无状态的连接，这种协议对于事务处理没有记忆能力，对同一个url请求没有上下文关系，而且每次请求都是相对独立的，它不会受前面请求的影响而影响本次请求的结果，因为服务器并不会保存客户端的状态，那么客户端必须每次带上自己的状态去请求服务器，这样服务器才能认出你是谁。</p>
+</blockquote>
+<p>举个简单的例子吧：</p>
+<p>若为有状态的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">B:我叫kingbora，我需要存放我的背包。</span><br><span class="line">S:好的。</span><br><span class="line">B:我来取我的背包。</span><br><span class="line">S:好的。</span><br></pre></td></tr></table></figure></p>
+<p>若为无状态的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">B:我叫kingbora，我需要存放我的背包。</span><br><span class="line">S:好的。</span><br><span class="line">B:我来取我的背包。</span><br><span class="line">S:你是谁？你的背包是哪个？。</span><br></pre></td></tr></table></figure></p>
+<p>那么上面的例子上所需要的状态便是用户的身份，如果每次请求不带上这个身份，服务器无法识别用户身份，也就无法返回正确的信息。但是目前的HTTP都是有状态的，主要是因为引入了Cookie和Session机制，来实现HTTP请求的状态保持。</p>
+<h2 id="一、Cookie、Session"><a href="#一、Cookie、Session" class="headerlink" title="一、Cookie、Session"></a>一、Cookie、Session</h2><h3 id="1-1-Cookie机制"><a href="#1-1-Cookie机制" class="headerlink" title="1.1 Cookie机制"></a>1.1 Cookie机制</h3><p>理论上，<strong>一个用户所有的请求操作都应该属于同一个会话，每个会话之间相互独立互不影响。</strong> HTTP协议是无状态的，一旦数据交互完毕，客户端和服务器之间的连接就会关闭，再次交换时需要重新建立新连接，也就意味着服务器无法从连接上跟踪会话。那么若想跟踪次会话，就需要引入Cookie这种会话机制。Cookie保存在客户端，具有不可跨域访问和操作的特性，而且还能设置有效期等等，</p>
+<h3 id="1-2-Session机制"><a href="#1-2-Session机制" class="headerlink" title="1.2 Session机制"></a>1.2 Session机制</h3><p>Session是服务器端使用的一种记录客户端状态的机制，使用上比Cookie简单，但也相应增加了服务器的存储压力。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上，也就是Session，下次访问时只需要从该Session中查找该客户的状态就好。</p>
+<p>如果说<strong>Cookie机制是通过检查客户身上的”通行证”来确定客户身份的话，那么Session机制就是通过检查服务器上的”客户明细表”来确认客户身份</strong>。Session相当于程序在服务器上建立的一份客户档案，客户来访的时候只需要查询客户档案表就行。</p>
+<p>多个客户端执行程序时，服务器会保存多个客户端的Session。获取Session的时候也不需要声明获取谁的Session。Session机制决定了当前客户只会获取到自己的Session，而不会获取到别人的Session。<strong>各客户的Session也彼此独立，互不可见</strong>。Session一般存放在服务器短的内存中，而且Session可以通过特殊的方式做持久化管理。</p>
+
+            </div>
+            <div class="ui-content-divide">
+                <div class="ui-divide-line"></div> 
+                <p class="ui-divide-content">本文结束<i class="ion-ios-paw"></i>感谢您的阅读</p>
+            </div>
+            
+    <ul class="ui-pager ui-clear-fix">
+      
+        <li class="ui-float-right">
+          <a href="/2018/04/18/我知道的HTTP/">
+                <span class="ui-pager-prev-content">
+                    
+                      我知道的http
+                      
+                </span>
+                <i class="ion-chevron-right"></i>
+          </a>
+        </li>
+        
+          
+            <li class="ui-float-left">
+              <a href="/2018/04/18/优雅数组去重/">
+                  <i class="ion-chevron-left"></i>
+                  <span class="ui-pager-next-content">
+                      
+                        优雅数组去重
+                      
+                  </span>
+              </a>
+            </li>
+            
+    </ul>
+    
+        </div>
+    </article>
+</main>
+                <!-- 分类、标签、归档等 -->
+                
+    <aside class="ui-sidebar">
+        
+            <section class="ui-card ui-catalog">
+                    <h3 class="ui-card-head">
+                        <p>
+                            <i class="ion-ios-list"></i>
+                            <span>文章目录</span>
+                        </p>
+                    </h3>
+                    <div class="ui-card-body">
+                        
+    <div class="ui-toc-detail">
+        <ol class="ui-post-toc"><li class="ui-post-toc-item ui-post-toc-level-2"><a class="ui-post-toc-link" href="#一、Cookie、Session"><span class="ui-post-toc-text">一、Cookie、Session</span></a><ol class="ui-post-toc-child"><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#1-1-Cookie机制"><span class="ui-post-toc-text">1.1 Cookie机制</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#1-2-Session机制"><span class="ui-post-toc-text">1.2 Session机制</span></a></li></ol></li></ol>
+    </div>
+    <div class="ui-toc-bar"><div>
+
+
+                    </div>
+                </section>
+        
+    </aside>
+
+            </section>
+            <footer class="ui-footer">
+    <p class="copyright">
+        Copyright © 2016, kingbora All Rights Reserved.
+    </p>
+</footer>
+            <a id="ui-back-top" data-title="返回顶部">
+                <i class="ion-ios-arrow-up"></i>
+            </a> 
+        </div>
+        <script src="/scripts/app.js"></script>
+        <script src="/scripts/plugin.js"></script>
+    </body>
+</html>

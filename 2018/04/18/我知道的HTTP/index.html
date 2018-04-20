@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+        <!--Setting-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta http-equiv="Cache-Control" content="no-siteapp">
+        <meta http-equiv="Cache-Control" content="no-transform">
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta name="apple-mobile-web-app-capable" content="Kingbora">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no,email=no,adress=no">
+        <meta name="browsermode" content="application">
+        <meta name="screen-orientation" content="portrait">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="stylesheet" href="/css/ionicons.min.css">
+        <link rel="stylesheet" href="/css/animate.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/markdown.css">
+        <link rel="stylesheet" href="/css/code.css">
+        <script src="/scripts/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <div id="ui-app">
+            <!-- 头部 -->
+            <header class="ui-header">
+    <ul class="ui-menu">
+        
+            <li class="">
+                <a href="/">首页</a>
+            </li>
+        
+            <li class="">
+                <a href="/archives/">归档</a>
+            </li>
+        
+            <li class="">
+                <a href="/about/">关于我</a>
+            </li>
+        
+    </ul>
+</header>
+            <!-- 主体内容 -->
+            <section class="ui-section">
+                <main class="ui-content-wrap animated slideInUp">
+    <article class="ui-card ui-article">
+        <div class="ui-card-body">
+            <div class="ui-article-header">
+                <h3 class="ui-article-title">
+                    我知道的http
+                </h3>
+                <div class="ui-article-type">
+                    <span class="ui-tag ui-tag-original">原</span>
+                    
+                        <span class="ui-tag ui-tag-default">
+                            <a class="ui-tag-badge" href="/tags/web/" title="web">
+                                web
+                            </a>
+                        </span>
+                        
+                        <span class="ui-tag ui-tag-default">
+                            <a class="ui-tag-badge" href="/tags/http/" title="http">
+                                http
+                            </a>
+                        </span>
+                        
+                </div>
+            </div>
+            <div class="ui-article-body ui-mark-down">
+                <blockquote>
+<p>HTTP是一个客户端和服务器端请求和应答的标准（TCP）。HTTP协议（HyperText Transfer Protocol，超文本传输协议）用于从www服务器传输超文本到本地浏览器的传输协议。它可以使浏览器更加高效，使网络传输减少。它不仅保证计算机正确快速地传输超文本文档，还确定传输文档中的哪一部分，以及哪部分内容首先显示（如文本先于图形）等。</p>
+</blockquote>
+<h2 id="一、协议基础"><a href="#一、协议基础" class="headerlink" title="一、协议基础"></a>一、协议基础</h2><p>HTTP协议采用了请求/响应模型，即客户端向服务器发送一个请求，请求头包括请求的方法、URL、协议版本、以及包含请求修饰符、客户信息和内容的类似MIME的消息结构；服务器以一个状态行作为响应，响应的内容包括消息协议的版本、成功或者错误编码加上包含服务器信息、实体源信息以及可能的实体内容。HTTP的头信息包括通用头、请求头、响应头和实体头四部分，每个头域由一个域名、冒号（:）和域值三部分组成。</p>
+<h3 id="1、通用头域"><a href="#1、通用头域" class="headerlink" title="1、通用头域"></a>1、通用头域</h3><p>通用头域包含请求和响应消息都支持的头域，是作为一个整体而不是特定资源与事务相关联，包括Cache-Control、Connection、Date、Pragma、Transfer-Encoding、Upgrade、Via。</p>
+<h4 id="Cache-Control头域"><a href="#Cache-Control头域" class="headerlink" title="Cache-Control头域"></a>Cache-Control头域</h4><p>Cache-Control指定请求和响应遵循的缓存机制。在请求消息或响应消息中设置Cache-Control并不会修改另一个消息处理过程中缓存处理过程，也就是每条消息都是相互独立的，都有自己的缓存机制。下面列举一些相关的缓存指令（<a href="http://tools.jb51.net/table/http_header" target="_blank" rel="noopener">详细参考</a>），指令不区分大小写，并且具有可选参数，默认private。</p>
+<h5 id="缓存请求指令"><a href="#缓存请求指令" class="headerlink" title="缓存请求指令"></a>缓存请求指令</h5><p>客户端可以在HTTP请求中使用标准Cache-Control指令：</p>
+<blockquote>
+<p>Cache-Control: max-age=\<seconds> <br><br>Cache-Control: max-stale[=\<seconds>] <br><br>Cache-Control: min-fresh=\<seconds> <br><br>Cache-control: no-cache <br><br>Cache-control: no-store <br><br>Cache-control: no-transform <br><br>Cache-control: only-if-cached</seconds></seconds></seconds></p>
+</blockquote>
+<h5 id="缓存响应指令"><a href="#缓存响应指令" class="headerlink" title="缓存响应指令"></a>缓存响应指令</h5><p>服务器可以在响应中使用的标准Cache-Control指令</p>
+<blockquote>
+<p>Cache-control: must-revalidate <br><br>Cache-control: no-cache <br><br>Cache-control: no-store <br><br>Cache-control: no-transform <br><br>Cache-control: public <br><br>Cache-control: private <br><br>Cache-control: proxy-revalidate <br><br>Cache-Control: max-age=\<seconds> <br><br>Cache-control: s-maxage=\<seconds></seconds></seconds></p>
+</blockquote>
+<h5 id="可缓存性"><a href="#可缓存性" class="headerlink" title="可缓存性"></a>可缓存性</h5><p><code>public</code></p>
+<p>表明响应可以被任何对象缓存（包括：发送请求的客户端，代理服务器等）。</p>
+<p><code>private</code></p>
+<p>表明响应只能被单个用户缓存，不能作为共享缓存（即代理服务器不能缓存它）。</p>
+<p><code>no-cache</code></p>
+<p>表明强制所有缓存了该响应的缓存用户，在使用已存储的缓存数据前，发送带验证器的请求到原始服务器</p>
+<p><code>only-if-cached</code></p>
+<p>表明如果缓存存在，只使用缓存，无论原始服务器数据是否有更新。</p>
+<h5 id="失效性"><a href="#失效性" class="headerlink" title="失效性"></a>失效性</h5><p><code>max-age=&lt;seconds&gt;</code></p>
+<p>设置缓存存在的最大周期，超过这个时间的缓存被认为过期。与Expires相反，时间是相对于请求的时间。</p>
+<p><code>s-maxsage=&lt;seconds&gt;</code></p>
+<p>覆盖max-age或者Expires头，但是仅适用于共享缓存（比如各个代理），并且私有缓存中会忽略它。</p>
+<p><code>max-stale[=&lt;seconds&gt;]</code></p>
+<p>表示客户端愿意接收一个已经过期的资源。可选的设置一个时间，表示响应不能超过的过时时间。</p>
+<p><code>min-fresh=&lt;seconds&gt;</code></p>
+<p>表示客户端希望在指定时间内获取最新的响应。</p>
+<h5 id="验证性"><a href="#验证性" class="headerlink" title="验证性"></a>验证性</h5><p><code>must-revalidate</code></p>
+<p>缓存必须在使用之前验证旧资源的状态，并且不可使用过期资源。</p>
+<p><code>proxy-revalidate</code></p>
+<p>与must-revalidate作用相同，但是仅适用于共享缓存（例如代理），并被私有缓存忽略。</p>
+<p><code>immutable</code></p>
+<p>表示响应正文不会随时间而改变。资源（如果未过期）在服务器上不发生改变，因此客户端不应发送重新验证请求头（例如If-None-Match或If-Modified-Since）来检查更新，即使用户显示地刷新页面。</p>
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p><code>no-store</code></p>
+<p>用于防止重要的信息不被无意的发布。在请求消息中发送将使得请求和响应消息都不使用缓存。</p>
+<p><code>no-transform</code></p>
+<p>不得对资源进行转换或转变。Content-Encoding、Content-Range、Content-Type等HTTP头不能由代理修改。例如，非透明代理可以对图像格式进行转换，以便节省缓存空间或者减少缓慢链路上的流量。no-transform指令不允许这样做。</p>
+<table>
+<thead>
+<tr>
+<th>Cache-directive</th>
+<th>打开新的浏览器窗口</th>
+<th>在原窗口单击Enter按钮</th>
+<th>刷新</th>
+<th>单击Back按钮</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pubic</td>
+<td>浏览器呈现来自缓存的页面</td>
+<td>浏览器呈现来自缓存的页面</td>
+<td>浏览器重新发送请求到服务器</td>
+<td>浏览器呈现来自缓存的页面</td>
+</tr>
+<tr>
+<td>private</td>
+<td>浏览器重新发送请求到服务器</td>
+<td>第一次，浏览器重新发送请求到服务器；此后，浏览器呈现来自缓存的页面</td>
+<td>浏览器重新发送请求到服务器</td>
+<td>浏览器呈现来自缓存的页面</td>
+</tr>
+<tr>
+<td>no-cache/no-store</td>
+<td>浏览器重新发送请求到服务器</td>
+<td>浏览器重新发送请求到服务器</td>
+<td>浏览器重新发送请求到服务器</td>
+<td>浏览器重新发送请求到服务器</td>
+</tr>
+<tr>
+<td>must-revalidate/proxy-revalidate</td>
+<td>浏览器重新发送请求到服务器</td>
+<td>第一次，浏览器重新发送请求到服务器；此后，浏览器呈现来自缓存的页面</td>
+<td>浏览器重新发送请求到服务器</td>
+<td>浏览器呈现来自缓存的页面</td>
+</tr>
+<tr>
+<td>max-age=xxx</td>
+<td>在xxx秒后，浏览器重新发送请求到服务器</td>
+<td>在xxx秒后，浏览器重新发送请求到服务器</td>
+<td>浏览器重新发送请求到服务器</td>
+<td>在xxx秒后，浏览器重新发送请求到服务器</td>
+</tr>
+</tbody>
+</table>
+<p><strong>结论：</strong><br>| 操作 | 表现 |<br>|–|–|<br>| 打开新窗口 | 如果指定cache-control的值为private、no-cache、must-revalidate,那么打开新窗口访问时都会重新访问服务器。而如果指定了max-age值,那么在此值内的时间里就不会重新访问服务器,例如：Cache-control: max-age=5 表示当访问此网页后的5秒内不会去再次访问服务器. |<br>| 在地址栏回车 | 如果值为private或must-revalidate,则只有第一次访问时会访问服务器,以后就不再访问。如果值为no-cache,那么每次都会访问。如果值为max-age,则在过期之前不会重复访问。 |<br>| 按后退按钮 | 如果值为private、must-revalidate、max-age,则不会重访问,而如果为no-cache,则每次都重复访问. |<br>| 按刷新按钮 | 无论为何值都会重新访问 |</p>
+<h4 id="Date头域"><a href="#Date头域" class="headerlink" title="Date头域"></a>Date头域</h4><p>Date头域表示消息发送的时间，时间的描述格式由rfc822定义。Date描述的时间表示世界标准时间，换算成本地时间需要知道用户所在的时区。</p>
+<h4 id="Pragma头域"><a href="#Pragma头域" class="headerlink" title="Pragma头域"></a>Pragma头域</h4><p>Pragma头域用来包含实现特定的指令，最常用的是Pragma:no-cache。在HTTP/1.1协议中，它的含义和Cache-Control:no-cache相同。</p>
+<h3 id="2、请求头域"><a href="#2、请求头域" class="headerlink" title="2、请求头域"></a>2、请求头域</h3><p>允许客户端传递关于自身的信息和希望响应形式。</p>
+<h4 id="Host头域"><a href="#Host头域" class="headerlink" title="Host头域"></a>Host头域</h4><p>Host头域指定请求资源的Internet主机和端口号，必须表示请求url的原始服务器或网关的位置。HTTP/1.1请求必须包含主机头域，否则系统会以400状态码返回。</p>
+<h4 id="Referer头域"><a href="#Referer头域" class="headerlink" title="Referer头域"></a>Referer头域</h4><p>Referer头域允许客户端指定请求uri的源资源地址，这可以允许服务器生成回退链表，可用来登陆、优化cache等。他允许废除的或错误的连接由于维护的目的被追踪。如果请求的uri没有自己的uri地址，Referer不能被发送。如果指定的是部分uri地址，则此地址应该是一个相对地址。</p>
+<h4 id="Range头域"><a href="#Range头域" class="headerlink" title="Range头域"></a>Range头域</h4><p>Range头域可以请求实体的一个或者多个子范围。但是服务器可以忽略次请求头，如果无条件GET包含Range请求头，响应会以状态码206（PartialContent）返回而不是200（OK）。</p>
+<h4 id="User-Agent头域"><a href="#User-Agent头域" class="headerlink" title="User-Agent头域"></a>User-Agent头域</h4><p>User-Agent头域的内容包含发送请求的用户信息。</p>
+<h3 id="3、响应头域"><a href="#3、响应头域" class="headerlink" title="3、响应头域"></a>3、响应头域</h3><p>响应头域允许服务器传递不能放在状态行的附加信息，这些域主要描述服务器的信息和Request-URI进一步的信息。响应头域包含Age、Location、Proxy-Authenticate、Public、Retry-After、Server、Vary、Warning、WWW-Authenticate。对响应头域的扩展要求通讯双方都支持，如果存在不支持的响应头域，一般将会作为实体头域处理。状态码（StatusCode）主要用于机器自动识别，第一个数字定义响应的类别，后两个数字没有分类的作用。第一个数字可能取5个不同的值：</p>
+<ul>
+<li>1xx：信息响应类，表示接收到请求并且继续处理</li>
+<li>2xx：处理成功响应类，表示动作被成功接收、理解和接受</li>
+<li>3xx：重定向响应类，为了完成指定的动作，必须接受进一步处理</li>
+<li>4xx：客户端错误，客户端请求包含语法错误或者是不能正确执行</li>
+<li>5xx：服务端错误，服务器不能正确执行一个正确的请求</li>
+</ul>
+<h4 id="Location响应头"><a href="#Location响应头" class="headerlink" title="Location响应头"></a>Location响应头</h4><p>Location响应头用于重定向接收者到一个新URI地址。</p>
+<h4 id="Server响应头"><a href="#Server响应头" class="headerlink" title="Server响应头"></a>Server响应头</h4><p>Server响应头包含处理请求的原始服务器的软件信息。</p>
+<h3 id="4、实体头域"><a href="#4、实体头域" class="headerlink" title="4、实体头域"></a>4、实体头域</h3><p>定义被传送资源的信息，即可用于请求，也可用于响应。请求消息和响应消息都可以包含实体信息，实体信息一般由实体头域和实体组成。实体头域包含关于实体的原信息，实体头包括Allow、Content-Base、Content-Encoding、Content-Language、Content-Length、Content-Location、Content-MD5、Content-Range、Content-Type、Etag、Expires、Last-Modified、extension-header。extension-header允许客户端定义新的实体头，但是这些域可能无法未接受方识别。实体可以是一个经过编码的字节流，它的编码方式由Content-Encoding或Content-Type定义，它的长度由Content-Length或Content-Range定义。</p>
+<h4 id="Content-Type实体头"><a href="#Content-Type实体头" class="headerlink" title="Content-Type实体头"></a>Content-Type实体头</h4><p>用于向接收方指示实体的介质类型，指定HEAD方法送到接收方的实体介质类型，或GET方法发送的请求介质类型Content-Range实体头</p>
+<h4 id="Content-Range实体头"><a href="#Content-Range实体头" class="headerlink" title="Content-Range实体头"></a>Content-Range实体头</h4><p>用于指定整个实体中的一部分的插入位置，他也指示了整个实体的长度。在服务器向客户返回一个部分响应，它必须描述响应覆盖的范围和整个实体长度。一般格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Range:bytes-unitSPfirst-byte-pos-last-byte-pos/entity-legth</span><br></pre></td></tr></table></figure></p>
+<p>例如，传送头500个字节次字段的形式：Content-Range:bytes0-499/1234如果一个http消息包含此节（例如，对范围请求的响应或对一系列范围的重叠请求），Content-Range表示传送的范围，Content-Length表示实际传送的字节数。</p>
+<h4 id="Last-modified实体头"><a href="#Last-modified实体头" class="headerlink" title="Last-modified实体头"></a>Last-modified实体头</h4><p>指定服务器上保存内容的最后修订时间。</p>
+<h2 id="二、工作流程"><a href="#二、工作流程" class="headerlink" title="二、工作流程"></a>二、工作流程</h2><p>一次HTTP操作称为一个事务，其工作过程可分为四步：</p>
+<ol>
+<li>域名解析<blockquote>
+<p>将网站名称转变为IP地址</p>
+</blockquote>
+</li>
+<li>发起TCP的3次握手协议<blockquote>
+<p>在客户端和服务器之间建立正常的TCP网络连接时：<br><br>（1）客户端首先发出一个SYN消息，<br><br>（2）服务器使用SYN+ACK应答表示接收到了这个消息，<br><br>（3）客户端再以ACK消息响应，<br><br>这样在客户端和服务器之间才能建立起可靠的TCP连接</p>
+</blockquote>
+</li>
+<li>建立TCP连接后发起http请求<blockquote>
+<p>所谓的http请求，也就是客户端想服务器发送信息，这个信息由如下三部分组成：<br><br>（1）请求行<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; 例如：GET www.cnblogs.com HTTP/1.1</span><br><span class="line">&gt; 请求行写法是固定的，由三部分组成，</span><br><span class="line">&gt; 第一部分是请求方法：</span><br><span class="line">&gt; 除了常见的只有Get和Post方法，实际上HTTP请求方法还有很多，比如： </span><br><span class="line">&gt; PUT方法，DELETE方法，HEAD方法，CONNECT方法，TRACE方法</span><br><span class="line">&gt; 第二部分是请求网址，</span><br><span class="line">&gt; 第三部分是HTTP版本。</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>（2）请求头<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; HTTP头在HTTP请求可以是3种HTTP头：</span><br><span class="line">&gt; 1. 请求头(request header)  </span><br><span class="line">&gt; 2. 普通头(general header)  </span><br><span class="line">&gt; 3. 实体头(entity header)</span><br><span class="line">&gt; 通常来说，由于Get请求往往不包含内容实体，因此也不会有实体头。</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>（3）内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; 只在POST请求中存在，因为GET请求并不包含任何实体</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<ol start="4">
+<li>服务器响应http请求，浏览器得到html代码<blockquote>
+<p>当服务器收到HTTP请求后，会根据请求的信息做某些处理（这些处理可能仅仅是静态的返回页，或是包含Asp.net，PHP，JSP等语言进行处理后的返回），相应的返回一个HTTP响应。HTTP响应在结构上类似HTTP请求，也是由三部分组成，分别为：<br><br>1、状态行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; 例如：HTTP/1.1 200 OK</span><br><span class="line">&gt; 第一部分是HTTP版本</span><br><span class="line">&gt; 第二部分是响应状态码</span><br><span class="line">&gt; 第三部分是状态码的描述</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>2、HTTP头<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; HTTP响应中包含的头包括：</span><br><span class="line">&gt; 1. 响应头(response header) </span><br><span class="line">&gt; 2. 普通头(general header) </span><br><span class="line">&gt; 3. 实体头(entity header)。</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>3、返回内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; HTTP响应内容就是HTTP请求所请求的信息。</span><br><span class="line">&gt; 这个信息可以是一个HTML，也可以是一个图片。</span><br><span class="line">&gt; 响应的数据格式通过Content-Type字段来获得：</span><br><span class="line">&gt; Content-Type: image/png;</span><br><span class="line">&gt; 或者我们熟悉的Content-Type: text/html</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<ol start="5">
+<li>浏览器解析html代码，并请求html代码中的资源</li>
+<li>浏览器对页面进行渲染并呈现给用户</li>
+</ol>
+
+            </div>
+            <div class="ui-content-divide">
+                <div class="ui-divide-line"></div> 
+                <p class="ui-divide-content">本文结束<i class="ion-ios-paw"></i>感谢您的阅读</p>
+            </div>
+            
+    <ul class="ui-pager ui-clear-fix">
+      
+          <li class="ui-float-right">
+              没有上一篇了
+          </li>
+          
+          
+            <li class="ui-float-left">
+              <a href="/2018/04/18/http无状态协议/">
+                  <i class="ion-chevron-left"></i>
+                  <span class="ui-pager-next-content">
+                      
+                        http无状态协议
+                      
+                  </span>
+              </a>
+            </li>
+            
+    </ul>
+    
+        </div>
+    </article>
+</main>
+                <!-- 分类、标签、归档等 -->
+                
+    <aside class="ui-sidebar">
+        
+            <section class="ui-card ui-catalog">
+                    <h3 class="ui-card-head">
+                        <p>
+                            <i class="ion-ios-list"></i>
+                            <span>文章目录</span>
+                        </p>
+                    </h3>
+                    <div class="ui-card-body">
+                        
+    <div class="ui-toc-detail">
+        <ol class="ui-post-toc"><li class="ui-post-toc-item ui-post-toc-level-2"><a class="ui-post-toc-link" href="#一、协议基础"><span class="ui-post-toc-text">一、协议基础</span></a><ol class="ui-post-toc-child"><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#1、通用头域"><span class="ui-post-toc-text">1、通用头域</span></a><ol class="ui-post-toc-child"><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Cache-Control头域"><span class="ui-post-toc-text">Cache-Control头域</span></a></li><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Date头域"><span class="ui-post-toc-text">Date头域</span></a></li><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Pragma头域"><span class="ui-post-toc-text">Pragma头域</span></a></li></ol></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#2、请求头域"><span class="ui-post-toc-text">2、请求头域</span></a><ol class="ui-post-toc-child"><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Host头域"><span class="ui-post-toc-text">Host头域</span></a></li><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Referer头域"><span class="ui-post-toc-text">Referer头域</span></a></li><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Range头域"><span class="ui-post-toc-text">Range头域</span></a></li><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#User-Agent头域"><span class="ui-post-toc-text">User-Agent头域</span></a></li></ol></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#3、响应头域"><span class="ui-post-toc-text">3、响应头域</span></a><ol class="ui-post-toc-child"><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Location响应头"><span class="ui-post-toc-text">Location响应头</span></a></li><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Server响应头"><span class="ui-post-toc-text">Server响应头</span></a></li></ol></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#4、实体头域"><span class="ui-post-toc-text">4、实体头域</span></a><ol class="ui-post-toc-child"><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Content-Type实体头"><span class="ui-post-toc-text">Content-Type实体头</span></a></li><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Content-Range实体头"><span class="ui-post-toc-text">Content-Range实体头</span></a></li><li class="ui-post-toc-item ui-post-toc-level-4"><a class="ui-post-toc-link" href="#Last-modified实体头"><span class="ui-post-toc-text">Last-modified实体头</span></a></li></ol></li></ol></li><li class="ui-post-toc-item ui-post-toc-level-2"><a class="ui-post-toc-link" href="#二、工作流程"><span class="ui-post-toc-text">二、工作流程</span></a></li></ol>
+    </div>
+    <div class="ui-toc-bar"><div>
+
+
+                    </div>
+                </section>
+        
+    </aside>
+
+            </section>
+            <footer class="ui-footer">
+    <p class="copyright">
+        Copyright © 2016, kingbora All Rights Reserved.
+    </p>
+</footer>
+            <a id="ui-back-top" data-title="返回顶部">
+                <i class="ion-ios-arrow-up"></i>
+            </a> 
+        </div>
+        <script src="/scripts/app.js"></script>
+        <script src="/scripts/plugin.js"></script>
+    </body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+        <!--Setting-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta http-equiv="Cache-Control" content="no-siteapp">
+        <meta http-equiv="Cache-Control" content="no-transform">
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta name="apple-mobile-web-app-capable" content="Kingbora">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no,email=no,adress=no">
+        <meta name="browsermode" content="application">
+        <meta name="screen-orientation" content="portrait">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="stylesheet" href="/css/ionicons.min.css">
+        <link rel="stylesheet" href="/css/animate.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/markdown.css">
+        <link rel="stylesheet" href="/css/code.css">
+        <script src="/scripts/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <div id="ui-app">
+            <!-- 头部 -->
+            <header class="ui-header">
+    <ul class="ui-menu">
+        
+            <li class="">
+                <a href="/">首页</a>
+            </li>
+        
+            <li class="">
+                <a href="/archives/">归档</a>
+            </li>
+        
+            <li class="">
+                <a href="/about/">关于我</a>
+            </li>
+        
+    </ul>
+</header>
+            <!-- 主体内容 -->
+            <section class="ui-section">
+                <main class="ui-content-wrap animated slideInUp">
+    <article class="ui-card ui-article">
+        <div class="ui-card-body">
+            <div class="ui-article-header">
+                <h3 class="ui-article-title">
+                    chrome调试内存泄漏
+                </h3>
+                <div class="ui-article-type">
+                    <span class="ui-tag ui-tag-original">原</span>
+                    
+                        <span class="ui-tag ui-tag-default">
+                            <a class="ui-tag-badge" href="/tags/web/" title="web">
+                                web
+                            </a>
+                        </span>
+                        
+                </div>
+            </div>
+            <div class="ui-article-body ui-mark-down">
+                <h2 id="angularjs有关内存泄漏的问题"><a href="#angularjs有关内存泄漏的问题" class="headerlink" title="angularjs有关内存泄漏的问题"></a>angularjs有关内存泄漏的问题</h2><h3 id="1、在window-document或者body上注册了监听事件"><a href="#1、在window-document或者body上注册了监听事件" class="headerlink" title="1、在window,document或者body上注册了监听事件"></a>1、在window,document或者body上注册了监听事件</h3><blockquote>
+<p>若在指令中往全局变量上添加监听，当这个指令的元素被销毁时，监听是依然存在的，它会阻止闭包和scope的回收和释放。因此在$destroy触发的时候应当移除该全局事件</p>
+</blockquote>
+<h3 id="2、-rootScope-on或者-rootScope-watch等等这种监听事件"><a href="#2、-rootScope-on或者-rootScope-watch等等这种监听事件" class="headerlink" title="2、$rootScope.$on或者$rootScope.$watch等等这种监听事件"></a>2、$rootScope.$on或者$rootScope.$watch等等这种监听事件</h3><blockquote>
+<p>$on和$watch同理在指令元素被销毁时依然存在的，也是需要在$destroy触发的时候执行一次$on和$watch返回的函数。</p>
+</blockquote>
+<h3 id="3、注意及时清理-timeout和-interval"><a href="#3、注意及时清理-timeout和-interval" class="headerlink" title="3、注意及时清理$timeout和$interval"></a>3、注意及时清理$timeout和$interval</h3><blockquote>
+<p>当$timeout或者$interval不再需要的时候，应当cancel掉，并将返回回来的变量置为null</p>
+</blockquote>
+<h3 id="4、重装的计时器"><a href="#4、重装的计时器" class="headerlink" title="4、重装的计时器"></a>4、重装的计时器</h3><blockquote>
+<p>在一个自定义的方法中定义了一个延时器，然后在这个方法之外调用这个方法来达到延时的效果，例如通过timeout来实现interval，这个是非常容易导致闭包泄漏的，应当在自定义的方法加一个return，虽然这个能够避免一些内存的泄漏，但是并不能完全避免，因为$timeout会造成一些内存泄漏，因此我们在编码过程中应当尽量避免使用$timeout</p>
+</blockquote>
+<h3 id="5、console-log中包含-scope"><a href="#5、console-log中包含-scope" class="headerlink" title="5、console.log中包含$scope"></a>5、console.log中包含$scope</h3><blockquote>
+<p>当使用console.log来调试$scope中的一些字段时会造成该$scope无法被释放掉，也会造成一定的内存泄漏，因此在生成模式下一定要禁用console.log</p>
+</blockquote>
+<h3 id="6、实例上被附带上-scope"><a href="#6、实例上被附带上-scope" class="headerlink" title="6、实例上被附带上$scope"></a>6、实例上被附带上$scope</h3><blockquote>
+<p>在指令类中定义了一个$scope，把link中的scope赋值给this.$scope，当scope被销毁时，this.$scope被挂载无法被回收，因此应当在$destroy触发时将类中的$scope给置为null</p>
+</blockquote>
+
+            </div>
+            <div class="ui-content-divide">
+                <div class="ui-divide-line"></div> 
+                <p class="ui-divide-content">本文结束<i class="ion-ios-paw"></i>感谢您的阅读</p>
+            </div>
+            
+    <ul class="ui-pager ui-clear-fix">
+      
+        <li class="ui-float-right">
+          <a href="/2018/04/18/CSS新属性认知/">
+                <span class="ui-pager-prev-content">
+                    
+                      css新属性认知
+                      
+                </span>
+                <i class="ion-chevron-right"></i>
+          </a>
+        </li>
+        
+          
+            <li class="ui-float-left">
+              <a href="/2018/04/18/angularjs/">
+                  <i class="ion-chevron-left"></i>
+                  <span class="ui-pager-next-content">
+                      
+                        angularjs
+                      
+                  </span>
+              </a>
+            </li>
+            
+    </ul>
+    
+        </div>
+    </article>
+</main>
+                <!-- 分类、标签、归档等 -->
+                
+    <aside class="ui-sidebar">
+        
+            <section class="ui-card ui-catalog">
+                    <h3 class="ui-card-head">
+                        <p>
+                            <i class="ion-ios-list"></i>
+                            <span>文章目录</span>
+                        </p>
+                    </h3>
+                    <div class="ui-card-body">
+                        
+    <div class="ui-toc-detail">
+        <ol class="ui-post-toc"><li class="ui-post-toc-item ui-post-toc-level-2"><a class="ui-post-toc-link" href="#angularjs有关内存泄漏的问题"><span class="ui-post-toc-text">angularjs有关内存泄漏的问题</span></a><ol class="ui-post-toc-child"><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#1、在window-document或者body上注册了监听事件"><span class="ui-post-toc-text">1、在window,document或者body上注册了监听事件</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#2、-rootScope-on或者-rootScope-watch等等这种监听事件"><span class="ui-post-toc-text">2、$rootScope.$on或者$rootScope.$watch等等这种监听事件</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#3、注意及时清理-timeout和-interval"><span class="ui-post-toc-text">3、注意及时清理$timeout和$interval</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#4、重装的计时器"><span class="ui-post-toc-text">4、重装的计时器</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#5、console-log中包含-scope"><span class="ui-post-toc-text">5、console.log中包含$scope</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#6、实例上被附带上-scope"><span class="ui-post-toc-text">6、实例上被附带上$scope</span></a></li></ol></li></ol>
+    </div>
+    <div class="ui-toc-bar"><div>
+
+
+                    </div>
+                </section>
+        
+    </aside>
+
+            </section>
+            <footer class="ui-footer">
+    <p class="copyright">
+        Copyright © 2016, kingbora All Rights Reserved.
+    </p>
+</footer>
+            <a id="ui-back-top" data-title="返回顶部">
+                <i class="ion-ios-arrow-up"></i>
+            </a> 
+        </div>
+        <script src="/scripts/app.js"></script>
+        <script src="/scripts/plugin.js"></script>
+    </body>
+</html>

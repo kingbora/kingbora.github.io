@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+        <!--Setting-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta http-equiv="Cache-Control" content="no-siteapp">
+        <meta http-equiv="Cache-Control" content="no-transform">
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta name="apple-mobile-web-app-capable" content="Kingbora">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no,email=no,adress=no">
+        <meta name="browsermode" content="application">
+        <meta name="screen-orientation" content="portrait">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="stylesheet" href="/css/ionicons.min.css">
+        <link rel="stylesheet" href="/css/animate.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/markdown.css">
+        <link rel="stylesheet" href="/css/code.css">
+        <script src="/scripts/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <div id="ui-app">
+            <!-- 头部 -->
+            <header class="ui-header">
+    <ul class="ui-menu">
+        
+            <li class="">
+                <a href="/">首页</a>
+            </li>
+        
+            <li class="">
+                <a href="/archives/">归档</a>
+            </li>
+        
+            <li class="">
+                <a href="/about/">关于我</a>
+            </li>
+        
+    </ul>
+</header>
+            <!-- 主体内容 -->
+            <section class="ui-section">
+                <main class="ui-content-wrap animated slideInUp">
+    <article class="ui-card ui-article">
+        <div class="ui-card-body">
+            <div class="ui-article-header">
+                <h3 class="ui-article-title">
+                    ECMAScript 6新认识
+                </h3>
+                <div class="ui-article-type">
+                    <span class="ui-tag ui-tag-original">原</span>
+                    
+                        <span class="ui-tag ui-tag-default">
+                            <a class="ui-tag-badge" href="/tags/js/" title="js">
+                                js
+                            </a>
+                        </span>
+                        
+                </div>
+            </div>
+            <div class="ui-article-body ui-mark-down">
+                <h3 id="1、do-表达式"><a href="#1、do-表达式" class="headerlink" title="1、do 表达式"></a>1、do 表达式</h3><p>本质上，块级作用域是一个语句，将多个操作封装在一起，没有返回值。而do表达式可以使得块级作用域可以变为表达式，也就是说可以返回值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> x = <span class="keyword">do</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> t = <span class="number">10</span>;</span><br><span class="line">  t ++;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(x);</span><br></pre></td></tr></table></figure>
+<p>目前在浏览器好像不支持！！！</p>
+<h3 id="2、属性冻结Object-freeze"><a href="#2、属性冻结Object-freeze" class="headerlink" title="2、属性冻结Object.freeze"></a>2、属性冻结Object.freeze</h3><p>冻结一个对象，使之添加新属性不起作用，严格模式下会报错。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> foo = &#123;&#125;;</span><br><span class="line"><span class="comment">// 为foo添加一个属性</span></span><br><span class="line">foo.props = <span class="number">123</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> todo = <span class="built_in">Object</span>.freeze(&#123;<span class="attr">props</span>:<span class="number">123</span>&#125;);</span><br><span class="line"><span class="comment">// 常规模式下，下面一行不起作用；</span></span><br><span class="line"><span class="comment">// 严格模式下，该行会报错</span></span><br><span class="line">foo.type = <span class="string">'a'</span>;</span><br></pre></td></tr></table></figure>
+<p>下面是一个将对象彻底冻结的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> constantize = <span class="function">(<span class="params">obj</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">Object</span>.freeze(obj);</span><br><span class="line">  <span class="built_in">Object</span>.keys(obj).forEach( <span class="function">(<span class="params">key, i</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ( <span class="keyword">typeof</span> obj[key] === <span class="string">'object'</span> ) &#123;</span><br><span class="line">      constantize( obj[key] );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="3、requestAnimatonFrame的好处"><a href="#3、requestAnimatonFrame的好处" class="headerlink" title="3、requestAnimatonFrame的好处"></a>3、requestAnimatonFrame的好处</h3><p>【1】 requestAnimationFrame会把每一帧中所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率</p>
+<p>【2】 在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流，这就意味着更少的CPU、GPU和内存使用量</p>
+<p>【3】 requestAnimationFrame是有浏览器专门为动画提供的API，在运行时浏览器会自动优化方法的调用，并且如果页面不是激活状态下的话，动画会自动暂停，有效节省了CPU的开销</p>
+<h3 id="4、字体font-family"><a href="#4、字体font-family" class="headerlink" title="4、字体font-family"></a>4、字体font-family</h3><p>@ 宋体      SimSun   <br><br>@ 黑体      SimHei   <br><br>@ 微信雅黑   Microsoft Yahei   <br><br>@ 微软正黑体 Microsoft JhengHei   <br><br>@ 新宋体    NSimSun   <br><br>@ 新细明体  MingLiU   <br><br>@ 细明体    MingLiU   <br><br>@ 标楷体    DFKai-SB   <br><br>@ 仿宋     FangSong   <br><br>@ 楷体     KaiTi   <br><br>@ 仿宋_GB2312  FangSong_GB2312   <br><br>@ 楷体_GB2312  KaiTi_GB2312     <br><br>@   <br><br>@ 说明：中文字体多数使用宋体、雅黑，英文用Helvetica   <br></p>
+<p>body { font-family: Microsoft Yahei,SimSun,Helvetica; }</p>
+<h3 id="5、最快捷的数组求最大值"><a href="#5、最快捷的数组求最大值" class="headerlink" title="5、最快捷的数组求最大值"></a>5、最快捷的数组求最大值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">3</span>];</span><br><span class="line"><span class="built_in">Math</span>.max(...arr); <span class="comment">// 7</span></span><br></pre></td></tr></table></figure>
+<h3 id="6、更短的数组去重写法"><a href="#6、更短的数组去重写法" class="headerlink" title="6、更短的数组去重写法"></a>6、更短的数组去重写法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[...new <span class="built_in">Set</span>([<span class="number">2</span>, <span class="string">"12"</span>, <span class="number">2</span>, <span class="number">12</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">6</span>])]</span><br><span class="line"></span><br><span class="line"><span class="comment">// [2, "12", 12, 1, 6, 13]</span></span><br></pre></td></tr></table></figure>
+            </div>
+            <div class="ui-content-divide">
+                <div class="ui-divide-line"></div> 
+                <p class="ui-divide-content">本文结束<i class="ion-ios-paw"></i>感谢您的阅读</p>
+            </div>
+            
+    <ul class="ui-pager ui-clear-fix">
+      
+        <li class="ui-float-right">
+          <a href="/2018/04/18/优雅数组去重/">
+                <span class="ui-pager-prev-content">
+                    
+                      优雅数组去重
+                      
+                </span>
+                <i class="ion-chevron-right"></i>
+          </a>
+        </li>
+        
+          
+            <li class="ui-float-left">
+              <a href="/2018/04/18/CSS新属性认知/">
+                  <i class="ion-chevron-left"></i>
+                  <span class="ui-pager-next-content">
+                      
+                        css新属性认知
+                      
+                  </span>
+              </a>
+            </li>
+            
+    </ul>
+    
+        </div>
+    </article>
+</main>
+                <!-- 分类、标签、归档等 -->
+                
+    <aside class="ui-sidebar">
+        
+            <section class="ui-card ui-catalog">
+                    <h3 class="ui-card-head">
+                        <p>
+                            <i class="ion-ios-list"></i>
+                            <span>文章目录</span>
+                        </p>
+                    </h3>
+                    <div class="ui-card-body">
+                        
+    <div class="ui-toc-detail">
+        <ol class="ui-post-toc"><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#1、do-表达式"><span class="ui-post-toc-text">1、do 表达式</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#2、属性冻结Object-freeze"><span class="ui-post-toc-text">2、属性冻结Object.freeze</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#3、requestAnimatonFrame的好处"><span class="ui-post-toc-text">3、requestAnimatonFrame的好处</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#4、字体font-family"><span class="ui-post-toc-text">4、字体font-family</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#5、最快捷的数组求最大值"><span class="ui-post-toc-text">5、最快捷的数组求最大值</span></a></li><li class="ui-post-toc-item ui-post-toc-level-3"><a class="ui-post-toc-link" href="#6、更短的数组去重写法"><span class="ui-post-toc-text">6、更短的数组去重写法</span></a></li></ol>
+    </div>
+    <div class="ui-toc-bar"><div>
+
+
+                    </div>
+                </section>
+        
+    </aside>
+
+            </section>
+            <footer class="ui-footer">
+    <p class="copyright">
+        Copyright © 2016, kingbora All Rights Reserved.
+    </p>
+</footer>
+            <a id="ui-back-top" data-title="返回顶部">
+                <i class="ion-ios-arrow-up"></i>
+            </a> 
+        </div>
+        <script src="/scripts/app.js"></script>
+        <script src="/scripts/plugin.js"></script>
+    </body>
+</html>
